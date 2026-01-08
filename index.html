@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +12,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(229, 231, 235, 1);
         }
-        
+
         .active-project {
             background-color: rgb(37 99 235);
             color: white;
@@ -28,12 +32,14 @@
         .table-container::-webkit-scrollbar {
             height: 4px;
         }
+
         .table-container::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 10px;
         }
     </style>
 </head>
+
 <body class="bg-slate-50 min-h-screen text-slate-900 flex flex-col md:flex-row">
 
     <!-- Mobile Header -->
@@ -47,32 +53,37 @@
     </div>
 
     <!-- Sidebar / Navigation -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-300 md:relative">
+    <aside id="sidebar"
+        class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-300 md:relative">
         <div class="p-6 border-b border-slate-100 text-center">
             <div id="sidebarLogoContainer" class="mb-2 hidden">
                 <img id="sidebarLogoPreview" src="" alt="Logo" class="max-h-12 mx-auto object-contain">
             </div>
-            <h2 id="companyTitle" class="text-xl font-black text-blue-600 tracking-tighter leading-tight">NAISATA <br> SOLUCIONES</h2>
+            <h2 id="companyTitle" class="text-xl font-black text-blue-600 tracking-tighter leading-tight">NAISATA <br>
+                SOLUCIONES</h2>
             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Sistemas & Redes</p>
         </div>
-        
+
         <div class="p-4 flex-1 overflow-y-auto">
             <h3 class="text-xs font-bold text-slate-400 uppercase mb-3 px-2">Proyectos</h3>
             <div id="projectList" class="space-y-1">
                 <!-- Proyectos se cargan aquí -->
             </div>
-            
-            <button onclick="openProjectModal()" class="w-full mt-4 flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition border border-dashed border-blue-200">
+
+            <button onclick="openProjectModal()"
+                class="w-full mt-4 flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition border border-dashed border-blue-200">
                 <i data-lucide="plus" class="w-4 h-4"></i> Nuevo Proyecto
             </button>
 
             <div class="mt-8 border-t border-slate-100 pt-6">
                 <h3 class="text-xs font-bold text-slate-400 uppercase mb-3 px-2">Ajustes</h3>
                 <input type="file" id="logoInput" accept="image/*" class="hidden" onchange="handleLogoUpload(event)">
-                <button onclick="document.getElementById('logoInput').click()" class="w-full flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition">
+                <button onclick="document.getElementById('logoInput').click()"
+                    class="w-full flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition">
                     <i data-lucide="image" class="w-4 h-4"></i> Cambiar Logo
                 </button>
-                <button id="btnRemoveLogo" onclick="removeLogo()" class="hidden w-full flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 rounded-lg transition mt-1">
+                <button id="btnRemoveLogo" onclick="removeLogo()"
+                    class="hidden w-full flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 rounded-lg transition mt-1">
                     <i data-lucide="trash-2" class="w-4 h-4"></i> Quitar Logo
                 </button>
             </div>
@@ -80,17 +91,20 @@
 
         <div class="p-4 border-t border-slate-100 bg-slate-50/50 space-y-2">
             <input type="file" id="importInput" accept=".json" class="hidden" onchange="importData(event)">
-            <button onclick="document.getElementById('importInput').click()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg transition">
+            <button onclick="document.getElementById('importInput').click()"
+                class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg transition">
                 <i data-lucide="upload" class="w-4 h-4"></i> Importar JSON
             </button>
-            <button onclick="exportData()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg transition">
+            <button onclick="exportData()"
+                class="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg transition">
                 <i data-lucide="download" class="w-4 h-4"></i> Backup
             </button>
         </div>
     </aside>
 
     <!-- Overlay for mobile sidebar -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden md:hidden"></div>
+    <div id="sidebar-overlay" onclick="toggleSidebar()"
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 hidden md:hidden"></div>
 
     <!-- Main Content -->
     <main class="flex-1 max-h-screen overflow-y-auto p-4 md:p-8">
@@ -99,15 +113,21 @@
             <header class="mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                     <div class="flex items-center gap-2 mb-1">
-                        <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Proyecto Actual</span>
+                        <span
+                            class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Proyecto
+                            Actual</span>
                     </div>
-                    <h1 id="currentProjectTitle" class="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight">Cargando...</h1>
+                    <h1 id="currentProjectTitle"
+                        class="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight">Cargando...
+                    </h1>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="generateDeliveryPDF()" class="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg font-bold text-sm grow md:grow-0 justify-center">
+                    <button onclick="generateDeliveryPDF()"
+                        class="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg font-bold text-sm grow md:grow-0 justify-center">
                         <i data-lucide="printer" class="w-4 h-4"></i> Generar Entrega
                     </button>
-                    <button onclick="toggleDeviceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-200 font-bold text-sm grow md:grow-0 justify-center">
+                    <button onclick="toggleDeviceModal()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-200 font-bold text-sm grow md:grow-0 justify-center">
                         <i data-lucide="plus" class="w-4 h-4"></i> Agregar Equipo
                     </button>
                 </div>
@@ -116,7 +136,7 @@
             <!-- Search Bar -->
             <div class="mb-6 relative">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
-                <input type="text" id="searchInput" placeholder="Filtrar por nombre o IP..." 
+                <input type="text" id="searchInput" placeholder="Filtrar por nombre o IP..."
                     class="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none transition shadow-sm bg-white"
                     onkeyup="filterTable()">
             </div>
@@ -127,11 +147,17 @@
                     <table class="w-full text-left border-collapse min-w-[600px]">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200">
-                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">Dispositivo</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">Dirección IP</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">Acceso</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">Contraseña</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest text-right">Acción</th>
+                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">
+                                    Dispositivo</th>
+                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">
+                                    Dirección IP</th>
+                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">
+                                    Acceso</th>
+                                <th class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest">
+                                    Contraseña</th>
+                                <th
+                                    class="px-6 py-4 text-[11px] font-black uppercase text-slate-400 tracking-widest text-right">
+                                    Acción</th>
                             </tr>
                         </thead>
                         <tbody id="deviceTableBody" class="divide-y divide-slate-100 bg-white">
@@ -150,54 +176,75 @@
     </main>
 
     <!-- Project Modal -->
-    <div id="projectModal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[100] backdrop-blur-sm">
+    <div id="projectModal"
+        class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[100] backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
             <h3 class="text-xl font-bold text-slate-800 mb-4">Nuevo Proyecto</h3>
-            <input type="text" id="projectPathInput" placeholder="Nombre del proyecto" class="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 font-bold uppercase">
+            <input type="text" id="projectPathInput" placeholder="Nombre del proyecto"
+                class="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 font-bold uppercase">
             <div class="flex gap-2">
-                <button onclick="closeProjectModal()" class="flex-1 px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition font-medium">Cancelar</button>
-                <button onclick="createProject()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition">Crear</button>
+                <button onclick="closeProjectModal()"
+                    class="flex-1 px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition font-medium">Cancelar</button>
+                <button onclick="createProject()"
+                    class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition">Crear</button>
             </div>
         </div>
     </div>
 
     <!-- Device Modal -->
-    <div id="deviceModal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[90] backdrop-blur-sm">
+    <div id="deviceModal"
+        class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[90] backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 overflow-y-auto max-h-[90vh]">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-slate-800">Agregar Equipo</h3>
-                <button onclick="toggleDeviceModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
+                <button onclick="toggleDeviceModal()" class="text-slate-400 hover:text-slate-600"><i
+                        data-lucide="x"></i></button>
             </div>
             <form id="deviceForm" class="space-y-4">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre</label>
-                    <input type="text" id="newLabel" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ej: NVR Principal">
+                    <label
+                        class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nombre</label>
+                    <input type="text" id="newLabel" required
+                        class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Ej: NVR Principal">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Dirección IP</label>
-                    <input type="text" id="newIp" required class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="192.168.20.X">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Dirección
+                        IP</label>
+                    <input type="text" id="newIp" required
+                        class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="192.168.20.X">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Usuario</label>
-                        <input type="text" id="newUser" value="admin" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label
+                            class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Usuario</label>
+                        <input type="text" id="newUser" value="admin"
+                            class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Contraseña</label>
-                        <input type="text" id="newPass" value="BR4GG402025$" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label
+                            class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Contraseña</label>
+                        <input type="text" id="newPass" value="BR4GG402025$"
+                            class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Notas</label>
-                    <input type="text" id="newNotes" placeholder="Ej: Hikvision MinMoe" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <label
+                        class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Notas</label>
+                    <input type="text" id="newNotes" placeholder="Ej: Hikvision MinMoe"
+                        class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-lg shadow-blue-100">Guardar Equipo</button>
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-blue-700 transition shadow-lg shadow-blue-100">Guardar
+                    Equipo</button>
             </form>
         </div>
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all translate-y-20 opacity-0 pointer-events-none flex items-center gap-3 z-[120]">
+    <div id="toast"
+        class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all translate-y-20 opacity-0 pointer-events-none flex items-center gap-3 z-[120]">
         <div class="bg-blue-500 p-1 rounded-lg">
             <i data-lucide="check" id="toastIcon" class="w-4 h-4 text-white"></i>
         </div>
@@ -208,7 +255,7 @@
         const STORAGE_KEY = 'naisata_soluciones_vault_v2';
         const INITIAL_PROJECT = 'BRAGGAO';
         const COMPANY_NAME = 'NAISATA SOLUCIONES';
-        
+
         let state = {
             projects: {
                 [INITIAL_PROJECT]: [
@@ -229,10 +276,10 @@
         // --- Core Functions ---
         function loadFromStorage() {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) try { 
+            if (saved) try {
                 const parsed = JSON.parse(saved);
                 state = { ...state, ...parsed };
-            } catch (e) {}
+            } catch (e) { }
             renderAll();
         }
 
@@ -336,7 +383,7 @@
         }
 
         function switchProject(name) { state.currentProject = name; saveToStorage(); renderAll(); }
-        
+
         function deleteProject(name) {
             if (confirm(`¿Eliminar definitivamente el proyecto "${name}"?`)) {
                 delete state.projects[name];
@@ -396,22 +443,22 @@
             doc.setFillColor(30, 41, 59);
             doc.rect(0, 0, 210, 45, 'F');
             doc.setTextColor(255, 255, 255);
-            
+
             let textStartX = 15;
             if (state.logo) {
                 try {
                     doc.addImage(state.logo, 'PNG', 15, 8, 30, 30, undefined, 'FAST');
                     textStartX = 55;
-                } catch(e) {}
+                } catch (e) { }
             }
-            
+
             doc.setFontSize(20);
             doc.setFont("helvetica", "bold");
             doc.text(COMPANY_NAME, textStartX, 22);
-            
+
             doc.setFontSize(8);
-            doc.text("SISTEMAS DE SEGURIDAD, REDES Y TELECOMUNICACIONES", textStartX, 30);
-            
+
+
             doc.setFontSize(14);
             doc.text("ENTREGA TÉCNICA", 195, 22, { align: 'right' });
             doc.setFontSize(9);
@@ -439,14 +486,14 @@
             doc.setFontSize(8);
             doc.setTextColor(150, 150, 150);
             const finalY = doc.lastAutoTable.finalY + 20;
-            doc.text(`Documento generado por el sistema de inventario de ${COMPANY_NAME}`, 105, 280, { align: 'center' });
+            doc.text(`Documento generado por el sistema entregas de ${COMPANY_NAME}`, 105, 280, { align: 'center' });
 
             doc.save(`Entrega_${COMPANY_NAME.replace(/\s+/g, '_')}_${project}.pdf`);
             showToast("Documento de entrega generado");
         }
 
         // --- Data Submission ---
-        document.getElementById('deviceForm').onsubmit = function(e) {
+        document.getElementById('deviceForm').onsubmit = function (e) {
             e.preventDefault();
             state.projects[state.currentProject].push({
                 label: document.getElementById('newLabel').value,
@@ -461,10 +508,10 @@
 
         function exportData() {
             const dataStr = JSON.stringify(state, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
             const link = document.createElement('a');
             link.setAttribute('href', dataUri);
-            link.setAttribute('download', `NAISATA_Backup_${new Date().toISOString().slice(0,10)}.json`);
+            link.setAttribute('download', `NAISATA_Backup_${new Date().toISOString().slice(0, 10)}.json`);
             link.click();
         }
 
@@ -484,4 +531,5 @@
         window.onload = loadFromStorage;
     </script>
 </body>
+
 </html>

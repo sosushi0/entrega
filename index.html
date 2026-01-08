@@ -24,11 +24,6 @@
             color: white;
         }
 
-        #signature-canvas {
-            touch-action: none;
-            cursor: crosshair;
-        }
-
         /* Estilos para el scroll lateral de la tabla en móvil */
         .table-container::-webkit-scrollbar {
             height: 4px;
@@ -53,17 +48,12 @@
 
     <!-- Sidebar / Navigation -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-300 md:relative">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-            <div class="text-center w-full">
-                <div id="sidebarLogoContainer" class="mb-2 hidden">
-                    <img id="sidebarLogoPreview" src="" alt="Logo" class="max-h-12 mx-auto object-contain">
-                </div>
-                <h2 id="companyTitle" class="text-xl font-black text-blue-600 tracking-tighter leading-tight">NAISATA <br> SOLUCIONES</h2>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Sistemas & Redes</p>
+        <div class="p-6 border-b border-slate-100 text-center">
+            <div id="sidebarLogoContainer" class="mb-2 hidden">
+                <img id="sidebarLogoPreview" src="" alt="Logo" class="max-h-12 mx-auto object-contain">
             </div>
-            <button onclick="toggleSidebar()" class="md:hidden p-1 text-slate-400">
-                <i data-lucide="x"></i>
-            </button>
+            <h2 id="companyTitle" class="text-xl font-black text-blue-600 tracking-tighter leading-tight">NAISATA <br> SOLUCIONES</h2>
+            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Sistemas & Redes</p>
         </div>
         
         <div class="p-4 flex-1 overflow-y-auto">
@@ -114,14 +104,11 @@
                     <h1 id="currentProjectTitle" class="text-3xl md:text-4xl font-extrabold text-slate-900 uppercase tracking-tight">Cargando...</h1>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="openSignatureModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg font-bold text-sm grow md:grow-0 justify-center">
-                        <i data-lucide="pen-tool" class="w-4 h-4"></i> Firmar
+                    <button onclick="generateDeliveryPDF()" class="bg-slate-900 hover:bg-black text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg font-bold text-sm grow md:grow-0 justify-center">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Generar Entrega
                     </button>
-                    <button onclick="generateDeliveryPDF()" class="bg-slate-900 hover:bg-black text-white px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg font-bold text-sm grow md:grow-0 justify-center">
-                        <i data-lucide="printer" class="w-4 h-4"></i> Imprimir PDF
-                    </button>
-                    <button onclick="toggleDeviceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-200 font-bold text-sm grow md:grow-0 justify-center">
-                        <i data-lucide="plus" class="w-4 h-4"></i> Agregar
+                    <button onclick="toggleDeviceModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-200 font-bold text-sm grow md:grow-0 justify-center">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Agregar Equipo
                     </button>
                 </div>
             </header>
@@ -156,27 +143,17 @@
                     <div class="bg-slate-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="database" class="w-8 h-8 text-slate-300"></i>
                     </div>
-                    <p class="text-slate-400 font-medium">No hay equipos en este proyecto.</p>
+                    <p class="text-slate-400 font-medium">No hay equipos registrados en este proyecto.</p>
                 </div>
-            </div>
-
-            <!-- Signature Display (Footer) -->
-            <div id="signaturePreviewContainer" class="hidden mt-8 p-6 glass-card rounded-2xl border-dashed border-2 border-slate-200 flex flex-col items-center">
-                <h4 class="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">Firma Registrada para PDF</h4>
-                <img id="signaturePreviewImage" src="" alt="Firma" class="max-h-24 bg-white p-2 rounded border border-slate-100">
-                <button onclick="clearStoredSignature()" class="mt-4 text-xs font-bold text-red-500 hover:text-red-600 flex items-center gap-1">
-                    <i data-lucide="trash-2" class="w-3 h-3"></i> Eliminar firma
-                </button>
             </div>
         </div>
     </main>
 
-    <!-- Modals -->
     <!-- Project Modal -->
     <div id="projectModal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[100] backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 scale-animation">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
             <h3 class="text-xl font-bold text-slate-800 mb-4">Nuevo Proyecto</h3>
-            <input type="text" id="projectPathInput" placeholder="Nombre (ej: Residencial X)" class="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 font-bold uppercase">
+            <input type="text" id="projectPathInput" placeholder="Nombre del proyecto" class="w-full p-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none mb-4 font-bold uppercase">
             <div class="flex gap-2">
                 <button onclick="closeProjectModal()" class="flex-1 px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition font-medium">Cancelar</button>
                 <button onclick="createProject()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-blue-700 transition">Crear</button>
@@ -206,7 +183,7 @@
                         <input type="text" id="newUser" value="admin" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Password</label>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Contraseña</label>
                         <input type="text" id="newPass" value="BR4GG402025$" class="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                 </div>
@@ -219,26 +196,6 @@
         </div>
     </div>
 
-    <!-- Signature Modal -->
-    <div id="signatureModal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-[110] backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-slate-800">Firma de Entrega</h3>
-                <button onclick="closeSignatureModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x"></i></button>
-            </div>
-            <p class="text-xs text-slate-500 mb-4">Firme en el recuadro para incluirla en el PDF.</p>
-            
-            <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl overflow-hidden mb-4 relative h-64">
-                <canvas id="signature-canvas" class="w-full h-full bg-white"></canvas>
-            </div>
-
-            <div class="flex gap-2">
-                <button onclick="clearCanvas()" class="flex-1 px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 transition font-bold text-sm text-slate-600 uppercase tracking-widest">Borrar</button>
-                <button onclick="saveSignature()" class="flex-1 bg-emerald-600 text-white px-4 py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-100 uppercase tracking-widest text-sm">Guardar Firma</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all translate-y-20 opacity-0 pointer-events-none flex items-center gap-3 z-[120]">
         <div class="bg-blue-500 p-1 rounded-lg">
@@ -248,129 +205,35 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'naisata_vault_responsive_v1';
+        const STORAGE_KEY = 'naisata_soluciones_vault_v2';
         const INITIAL_PROJECT = 'BRAGGAO';
         const COMPANY_NAME = 'NAISATA SOLUCIONES';
         
         let state = {
             projects: {
                 [INITIAL_PROJECT]: [
-                    { label: 'Router (Gateway)', ip: '192.168.20.1', user: 'admin', pass: 'N/A', notes: 'Gateway principal' },
-                    { label: 'NVR Hikvision', ip: '192.168.20.240', user: 'admin', pass: 'BR4GG402025$', notes: 'Grabador' },
-                    { label: 'Terminal MinMoe 1', ip: '192.168.20.243', user: 'admin', pass: 'BR4GG402025$', notes: 'Acceso' }
+                    { label: 'Router (Gateway)', ip: '192.168.20.1', user: 'admin', pass: 'N/A', notes: 'Puerta de enlace principal' },
+                    { label: 'NVR Hikvision', ip: '192.168.20.240', user: 'admin', pass: 'BR4GG402025$', notes: 'Grabador de video' },
+                    { label: 'Punto de Acceso 01', ip: '192.168.20.241', user: '-', pass: '-', notes: 'Gestionado por Omada' },
+                    { label: 'Punto de Acceso 02', ip: '192.168.20.242', user: '-', pass: '-', notes: 'Gestionado por Omada' },
+                    { label: 'Terminal MinMoe 1', ip: '192.168.20.243', user: 'admin', pass: 'BR4GG402025$', notes: 'Control de Acceso Hikvision' },
+                    { label: 'Terminal MinMoe 2', ip: '192.168.20.244', user: 'admin', pass: 'BR4GG402025$', notes: 'Control de Acceso Hikvision' },
+                    { label: 'Terminal MinMoe 3', ip: '192.168.20.245', user: 'admin', pass: 'BR4GG402025$', notes: 'Control de Acceso Hikvision' },
+                    { label: 'Terminal MinMoe 4', ip: '192.168.20.246', user: 'admin', pass: 'BR4GG402025$', notes: 'Control de Acceso Hikvision' }
                 ]
             },
             currentProject: INITIAL_PROJECT,
-            logo: null,
-            signature: null // Almacena el base64 de la firma
+            logo: null
         };
 
-        // --- Signature Logic ---
-        let canvas, ctx, drawing = false;
-
-        function initCanvas() {
-            canvas = document.getElementById('signature-canvas');
-            ctx = canvas.getContext('2d');
-            
-            // Ajustar resolución del canvas
-            const resize = () => {
-                const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width;
-                canvas.height = rect.height;
-                ctx.strokeStyle = "#1e293b";
-                ctx.lineWidth = 2.5;
-                ctx.lineCap = "round";
-            };
-            
-            resize();
-            window.addEventListener('resize', resize);
-
-            const startDrawing = (e) => {
-                drawing = true;
-                const pos = getPos(e);
-                ctx.beginPath();
-                ctx.moveTo(pos.x, pos.y);
-            };
-
-            const draw = (e) => {
-                if (!drawing) return;
-                const pos = getPos(e);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.stroke();
-            };
-
-            const stopDrawing = () => drawing = false;
-
-            const getPos = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return { x: clientX - rect.left, y: clientY - rect.top };
-            };
-
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            window.addEventListener('mouseup', stopDrawing);
-            
-            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
-            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
-            canvas.addEventListener('touchend', stopDrawing);
-        }
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function saveSignature() {
-            // Comprobar si hay dibujo (simple chequeo de contenido)
-            const blank = document.createElement('canvas');
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                showToast("Firme antes de guardar", "alert-circle", "text-amber-500");
-                return;
-            }
-            
-            state.signature = canvas.toDataURL();
-            saveToStorage();
-            renderSignaturePreview();
-            closeSignatureModal();
-            showToast("Firma guardada para el acta");
-        }
-
-        function renderSignaturePreview() {
-            const container = document.getElementById('signaturePreviewContainer');
-            const img = document.getElementById('signaturePreviewImage');
-            if (state.signature) {
-                img.src = state.signature;
-                container.classList.remove('hidden');
-            } else {
-                container.classList.add('hidden');
-            }
-        }
-
-        function clearStoredSignature() {
-            state.signature = null;
-            saveToStorage();
-            renderSignaturePreview();
-            showToast("Firma eliminada");
-        }
-
-        // --- UI & Storage ---
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
+        // --- Core Functions ---
         function loadFromStorage() {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) try { 
-                state = { ...state, ...JSON.parse(saved) };
+                const parsed = JSON.parse(saved);
+                state = { ...state, ...parsed };
             } catch (e) {}
             renderAll();
-            initCanvas();
         }
 
         function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -379,7 +242,6 @@
             renderProjectList();
             renderTable();
             renderLogo();
-            renderSignaturePreview();
             document.getElementById('currentProjectTitle').innerText = state.currentProject;
             lucide.createIcons();
         }
@@ -447,8 +309,8 @@
             tbody.innerHTML = devices.map((d, index) => `
                 <tr class="hover:bg-blue-50/20 transition group">
                     <td class="px-6 py-4">
-                        <div class="font-bold text-slate-800 text-sm truncate max-w-[150px]">${d.label}</div>
-                        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider truncate max-w-[150px]">${d.notes || ''}</div>
+                        <div class="font-bold text-slate-800 text-sm truncate max-w-[150px] md:max-w-none">${d.label}</div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider truncate max-w-[150px] md:max-w-none">${d.notes || ''}</div>
                     </td>
                     <td class="px-6 py-4">
                         <code class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-bold font-mono border border-blue-100 cursor-pointer" onclick="copyText('${d.ip}')">${d.ip}</code>
@@ -465,11 +327,18 @@
             lucide.createIcons();
         }
 
-        // --- Logic & Actions ---
+        // --- UI Interactions ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
         function switchProject(name) { state.currentProject = name; saveToStorage(); renderAll(); }
         
         function deleteProject(name) {
-            if (confirm(`¿Eliminar proyecto "${name}"?`)) {
+            if (confirm(`¿Eliminar definitivamente el proyecto "${name}"?`)) {
                 delete state.projects[name];
                 if (state.currentProject === name) state.currentProject = INITIAL_PROJECT;
                 saveToStorage(); renderAll();
@@ -504,24 +373,18 @@
             for (let r of rows) r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
         }
 
-        // --- Modals ---
         function toggleDeviceModal() { document.getElementById('deviceModal').classList.toggle('hidden'); document.getElementById('deviceModal').classList.toggle('flex'); }
         function openProjectModal() { document.getElementById('projectModal').classList.remove('hidden'); document.getElementById('projectModal').classList.add('flex'); }
         function closeProjectModal() { document.getElementById('projectModal').classList.add('hidden'); }
-        function openSignatureModal() { document.getElementById('signatureModal').classList.remove('hidden'); document.getElementById('signatureModal').classList.add('flex'); clearCanvas(); }
-        function closeSignatureModal() { document.getElementById('signatureModal').classList.add('hidden'); }
 
-        function showToast(msg, icon = 'check', color = 'text-white') {
+        function showToast(msg) {
             const t = document.getElementById('toast');
-            const ti = document.getElementById('toastIcon');
             document.getElementById('toastMsg').innerText = msg;
-            ti.setAttribute('data-lucide', icon);
-            lucide.createIcons();
             t.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
             setTimeout(() => t.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none'), 2500);
         }
 
-        // --- PDF Generation (Pro Version) ---
+        // --- PDF Generation ---
         function generateDeliveryPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -529,7 +392,7 @@
             const devices = state.projects[project] || [];
             const date = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
 
-            // 1. Header Rect
+            // 1. Header
             doc.setFillColor(30, 41, 59);
             doc.rect(0, 0, 210, 45, 'F');
             doc.setTextColor(255, 255, 255);
@@ -558,7 +421,7 @@
             doc.setTextColor(40, 40, 40);
             doc.setFontSize(11);
             doc.text("Entrega formal de equipamiento y configuraciones de red:", 15, 60);
-            doc.text(`Fecha: ${date}`, 15, 66);
+            doc.text(`Fecha del Reporte: ${date}`, 15, 66);
 
             // 3. Table
             const tableData = devices.map(d => [d.label, d.ip, d.user, d.pass, d.notes]);
@@ -572,30 +435,17 @@
                 columnStyles: { 1: { fontStyle: 'bold', textColor: [37, 99, 235] } }
             });
 
-            // 4. Footer & Signature
-            let finalY = doc.lastAutoTable.finalY + 25;
-            
-            if (finalY > 240) { doc.addPage(); finalY = 30; }
-
-            if (state.signature) {
-                // Dibujar firma encima de la línea
-                doc.addImage(state.signature, 'PNG', 130, finalY - 15, 50, 20);
-            }
-
-            doc.setDrawColor(200, 200, 200);
-            doc.line(20, finalY + 5, 90, finalY + 5); 
-            doc.line(120, finalY + 5, 190, finalY + 5);
-            
+            // Footer simplificado sin líneas de firma según solicitud
             doc.setFontSize(8);
-            doc.setTextColor(120, 120, 120);
-            doc.text(`ENTREGADO POR (${COMPANY_NAME})`, 55, finalY + 11, { align: 'center' });
-            doc.text("RECIBIDO POR (CLIENTE)", 155, finalY + 11, { align: 'center' });
+            doc.setTextColor(150, 150, 150);
+            const finalY = doc.lastAutoTable.finalY + 20;
+            doc.text(`Documento generado por el sistema de inventario de ${COMPANY_NAME}`, 105, 280, { align: 'center' });
 
             doc.save(`Entrega_${COMPANY_NAME.replace(/\s+/g, '_')}_${project}.pdf`);
-            showToast("Acta PDF generada");
+            showToast("Documento de entrega generado");
         }
 
-        // --- Data Management ---
+        // --- Data Submission ---
         document.getElementById('deviceForm').onsubmit = function(e) {
             e.preventDefault();
             state.projects[state.currentProject].push({
@@ -625,11 +475,7 @@
             reader.onload = (e) => {
                 try {
                     const imported = JSON.parse(e.target.result);
-                    if (imported.projects) { 
-                        state = { ...state, ...imported }; 
-                        saveToStorage(); renderAll(); 
-                        showToast('Backup restaurado'); 
-                    }
+                    if (imported.projects) { state = { ...state, ...imported }; saveToStorage(); renderAll(); showToast('Backup restaurado'); }
                 } catch (err) { showToast('Archivo inválido', 'x-circle', 'text-red-400'); }
             };
             reader.readAsText(file);
